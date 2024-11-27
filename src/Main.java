@@ -1,28 +1,42 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 public class Main {
     public static void main(String[] args) {
-        int[] arr= { 1, 0, 1, 0, 1, 0, 0, 1 };
-//        int n=10;
+        int[] arr= { 0, 0, 1, 0, 1, 0, 0 };
         solution(arr);
-
     }
     static void solution(int[] arr){
         int len=arr.length;
-        int j=len;
-        int k=0;
-        int[] sortedArr=new int[len];
+        int begin=0;
+        int end=0;
+
         for(int i=0;i<len;i++){
-           if(arr[i]==0){
-               sortedArr[k]=arr[i];
-               k++;
-           }else{
-               sortedArr[j-1]=arr[i];
-               j--;
-           }
+            int m=i;
+            int zero=0;
+            int one=0;
+          while(m<len){
+              if(arr[m]==0){
+                  zero++;
+              }else{
+                  one++;
+              }
+              if(zero==one && (m-i)>(end-begin)){
+                  end=m;
+                  begin=i;
+              }
+              m++;
+          }
         }
-        for(int m=0;m<len;m++){
-            System.out.print(sortedArr[m]);
-            System.out.print(",");
+        for(int k= begin;k<=end;k++){
+            System.out.print(arr[k]);
+            if(k!=end) {
+                System.out.print(",");
+            }
         }
+
 
     }
 }
