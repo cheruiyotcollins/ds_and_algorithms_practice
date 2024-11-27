@@ -1,29 +1,27 @@
 public class Main {
     public static void main(String[] args) {
-        int[] arr= { 3, 4, -7, 3, 1, 3, 1, -4, -2, -2 };
+        int[] arr= { 1, 0, 1, 0, 1, 0, 0, 1 };
 //        int n=10;
         solution(arr);
 
     }
     static void solution(int[] arr){
         int len=arr.length;
-        int count=0;
+        int j=len;
+        int k=0;
+        int[] sortedArr=new int[len];
         for(int i=0;i<len;i++){
-            int sum=arr[i];
-            int j=i+1;
-            while(j<len &&sum!=0){
-              sum+=arr[j];
-              if(sum==0){
-                  int k=i;
-                  System.out.println("SubArray Found\n");
-                  while(k<=j){
-            System.out.print(arr[k]);
-            System.out.print(",");
-            k++;
+           if(arr[i]==0){
+               sortedArr[k]=arr[i];
+               k++;
+           }else{
+               sortedArr[j-1]=arr[i];
+               j--;
+           }
         }
-              }
-              j++;
-            }
+        for(int m=0;m<len;m++){
+            System.out.print(sortedArr[m]);
+            System.out.print(",");
         }
 
     }
