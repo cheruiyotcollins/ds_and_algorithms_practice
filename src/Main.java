@@ -2,33 +2,43 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        int[] X = { 1, 2, 3, 4, 5 };
+        int[] X = { 3, 5, 8, 4, 5, 9, 10, 8, 5, 3, 4 };
 
         solution(X);
     }
-
-//    private static void swap(int[] A, int i, int j) {
-//        int temp = A[i];
-//        A[i] = A[j];
-//        A[j] = temp;
-//    }
-
     public static void solution(int[] A) {
         int len = A.length;
-        int[] result = new int[len];
-
+        int max=0;
+        int begin=0;
+        int end=0;
         for (int i = 0; i < len; i++) {
-            int product=1;
-           for(int j=0;j<len;j++){
-               if(j==i){
-                   continue;
-               }
-               product*=A[j];
-           }
-            result[i]=product;
+            int k=i;
+            int countAsc=0;
+            int countDesc=0;
+
+          while(k<len-1&&A[k]<A[k+1]){
+              countAsc++;
+              k++;
+          } if(k+1<len&&A[k]>A[k+1]){
+                while(k<len-1&&A[k]>A[k+1]){
+                    countDesc++;
+                    k++;
+                }
+            }
+          if(countAsc+countDesc>max){
+             begin=i;
+             end=k;
+              max=countAsc+countDesc;
+          }
 
         }
 
-        System.out.println(Arrays.toString(result));
+        for(int j=begin;j<=end;j++){
+            System.out.print(A[j]);
+            if(j!=end){
+                System.out.print(",");
+            }
+
+        }
     }
 }
