@@ -16,7 +16,7 @@ public class Main {
 
     public static void solution(int[] A) {
         int len = A.length;
-        for (int i = 0; i < len - 2; i++) {
+        for (int i = 0; i < len; i++) {
             int left = i;
             int sumLeft = 0;
             while (left > 0) {
