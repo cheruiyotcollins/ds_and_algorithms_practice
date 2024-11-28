@@ -2,7 +2,8 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        int[]  X = {-10, -3, 5, 6, -2};
+        int[]  X = {9, 6, 8, 3, 7};
+
         solution(X);
     }
     private static void swap(int[] A, int i, int j)
@@ -16,15 +17,11 @@ public class Main {
     public static void solution(int[] A)
     {
         int len= A.length;
-        for (int i = len - 1; i >= 1; i--)
+        Arrays.sort(A);
+        for (int i =0; i<len-2; i+=2)
         {
-            Random rand = new Random();
-
-            int j = rand.nextInt(i + 1);
-
-            swap(A, i, j);
+            swap(A, i+1, i+2);
         }
         System.out.println(Arrays.toString(A));
     }
     }
-
