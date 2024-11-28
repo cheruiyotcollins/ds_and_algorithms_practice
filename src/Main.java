@@ -2,26 +2,38 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        int[]  X = {9, 6, 8, 3, 7};
+        int[]  X = {0, -3, 5, -4, -2, 3, 1, 0};
 
         solution(X);
     }
-    private static void swap(int[] A, int i, int j)
-    {
-        int temp = A[i];
-        A[i] = A[j];
-        A[j] = temp;
-    }
+//    private static void swap(int[] A, int i, int j)
+//    {
+//        int temp = A[i];
+//        A[i] = A[j];
+//        A[j] = temp;
+//    }
 
-    // Function to shuffle an array `A[]`
-    public static void solution(int[] A)
-    {
-        int len= A.length;
-        Arrays.sort(A);
-        for (int i =0; i<len-2; i+=2)
-        {
-            swap(A, i+1, i+2);
+
+    public static void solution(int[] A) {
+        int len = A.length;
+        for (int i = 0; i < len - 2; i++) {
+            int left = i;
+            int sumLeft = 0;
+            while (left > 0) {
+                sumLeft += A[left - 1];
+                left--;
+            }
+            int right = i;
+            int sumRight = 0;
+            while (right < len-1) {
+                sumRight += A[right + 1];
+                right++;
+
+            }
+            if(sumLeft==sumRight){
+                System.out.println("Equilibrium found at "+ i);
+            }
+
         }
-        System.out.println(Arrays.toString(A));
     }
-    }
+}
