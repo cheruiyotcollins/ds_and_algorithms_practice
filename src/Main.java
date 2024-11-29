@@ -2,28 +2,33 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        int[] X = { 2, 7, 9, 5, 1, 3, 5 };
+        int[] X = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
         solution(X);
     }
     public static void solution(int[] A) {
         int len = A.length;
         int max=0;
-        int fist=0;
-        int second=0;
+        int firstIndex=0;
+        int lastIndex=0;
 
         for (int i = 0; i < len; i++) {
-         for(int j=i+1;j<len-1;j++){
-             if(A[j]-A[i]>max){
-                 max=A[j]-A[i];
-                 fist=i;
-                 second=j;
+            int sum=0;
+         for(int j=i;j<len-1;j++){
+             sum+=A[j];
+             if(sum>max){
+                 max=sum;
+                 firstIndex=i;
+                 lastIndex=j;
              }
          }
-
-
-
         }
-        System.out.println(A[fist]+" and the second element is: "+ A[second]+" This is the difference>:"+ max);
+        System.out.println("This is the Sum:"+ max);
+        for(int j=firstIndex;j<=lastIndex;j++){
+            System.out.print(A[j]);
+            if(j!=lastIndex){
+                System.out.print(",");
+            }
+        }
 
     }
 }
