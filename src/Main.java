@@ -3,14 +3,14 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         List<String> listString = new ArrayList<>();
-//        listString.add("7,1,2");
-//        listString.add("2,4,6");
-//        listString.add("3,6,5");
-//        listString.add("3,1,2");
-        listString.add("1,3,7");
-        listString.add("3,6,4");
-        listString.add("1,1,5");
-        listString.add("7,2,4");
+        listString.add("7,1,2");
+        listString.add("2,4,6");
+        listString.add("3,6,5");
+        listString.add("3,1,2");
+//        listString.add("1,3,7");
+//        listString.add("3,6,4");
+//        listString.add("1,1,5");
+//        listString.add("7,2,4");
 
         int totalStops = slotWheels(listString);
         System.out.println("Total number of stops: " + totalStops);
@@ -45,8 +45,8 @@ public class Main {
                     // If this column contains the global max, reset it and break
                     if (spin[col] == maxStops && spin[col] != 0) {
                         setInt.add(maxStops); // Add the global maximum to stops array
-                        spin[col] = 0; // Set global max to 0
-                        break;
+                        spin[col] = 0;        // Set global max to 0
+                        break;                // Exit the loop for this row after processing maxStops
                     }
 
                     // Update maxRow for other columns in the row
@@ -61,9 +61,9 @@ public class Main {
                     spin[indexMax] = 0;
                 }
 
-
-                System.out.println(Arrays.toString(spin));
+                System.out.println(Arrays.toString(spin)); // Debug: Print the row after processing
             }
+
         }
            System.out.println(setInt);
               for(int j: setInt){
