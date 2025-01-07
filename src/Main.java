@@ -2,35 +2,42 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        List<Integer> arr = new ArrayList<>();
-        arr.add(1);
-        arr.add(5);
-        arr.add(4);
-        arr.add(3);
+//        List<Integer> arr = new ArrayList<>();
+//        arr.add(1);
+//        arr.add(5);
+//        arr.add(4);
+//        arr.add(3);
+        int[] arr = {3, 0, 1, 0, 4,0,2}; // Use Integer instead of int for List conversion
+
 
 //        long n= 20;
 
 
-        int area = areaCalculator(arr);
-        System.out.println("The Maximum volume is : " + area);
+        int volume = areaCalculator(arr);
+        System.out.println("The Maximum volume is : " + volume);
     }
 
-    public static int areaCalculator(List<Integer> arr) {
-        int area=0;
-        int len= arr.size();
-        int width=0;
-        int height=0;
+    public static int areaCalculator(int[] arr) {
+        int res = 0;
 
-        for(int i=1;i<=len;i++){
-            for(int j=i+1;j<len;j++){
-                width=j-i;
-              height=Math.min(arr.get(i),arr.get(j));
-                if(width*height>area){
-                    area=width*height;
-                }
-            }
+        // For every element of the array
+        for (int i = 1; i < arr.length - 1; i++) {
+
+            // Find the maximum element on its left
+            int left = arr[i];
+            for (int j = 0; j < i; j++)
+                left = Math.max(left, arr[j]);
+
+            // Find the maximum element on its right
+            int right = arr[i];
+            for (int j = i + 1; j < arr.length; j++)
+                right = Math.max(right, arr[j]);
+
+            // Update the maximum water
+            res += Math.min(left, right) - arr[i];
         }
-        return area;
+
+        return res;
 
     }
 //    public static List<List<Integer>> stringIntegerConverter(List<String> history){
