@@ -7,37 +7,40 @@ public class Main {
 //        arr.add(5);
 //        arr.add(4);
 //        arr.add(3);
-        int[] arr = {3, 0, 1, 0, 4,0,2}; // Use Integer instead of int for List conversion
-
+        int[] arr = {7, 3, 2, 4, 9, 12, 56};
+        int m=5;
 
 //        long n= 20;
 
 
-        int volume = areaCalculator(arr);
+        int volume = areaCalculator(arr,m);
         System.out.println("The Maximum volume is : " + volume);
     }
 
-    public static int areaCalculator(int[] arr) {
-        int res = 0;
-
+    public static int areaCalculator(int[] arr, int m) {
+        int res = Integer.MAX_VALUE;
+         Arrays.sort(arr);
         // For every element of the array
-        for (int i = 1; i < arr.length - 1; i++) {
+        int n = arr.length;
 
-            // Find the maximum element on its left
-            int left = arr[i];
-            for (int j = 0; j < i; j++)
-                left = Math.max(left, arr[j]);
+        // Sort the given packets
+        Arrays.sort(arr);
 
-            // Find the maximum element on its right
-            int right = arr[i];
-            for (int j = i + 1; j < arr.length; j++)
-                right = Math.max(right, arr[j]);
+        int minDiff = Integer.MAX_VALUE;
 
-            // Update the maximum water
-            res += Math.min(left, right) - arr[i];
+        for (int i = 0; i + m - 1 < n; i++) {
+
+            // calculate difference of current window
+            int diff = arr[i + m - 1] - arr[i];
+
+            // if current difference is smaller
+            // then update the minimum difference
+            if (diff < minDiff)
+                minDiff = diff;
         }
+        return minDiff;
 
-        return res;
+
 
     }
 //    public static List<List<Integer>> stringIntegerConverter(List<String> history){
