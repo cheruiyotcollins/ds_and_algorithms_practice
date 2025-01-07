@@ -2,24 +2,35 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        List<String> listString = new ArrayList<>();
-//        listString.add("7,1,2");
-//        listString.add("2,4,6");
-//        listString.add("3,6,5");
-//        listString.add("3,1,2");
-        long n= 20;
+        List<Integer> arr = new ArrayList<>();
+        arr.add(1);
+        arr.add(5);
+        arr.add(4);
+        arr.add(3);
+
+//        long n= 20;
 
 
-        long factorial = factorialCalculator(n);
-        System.out.println("The Factorial of : "+n +"is " + factorial);
+        int area = areaCalculator(arr);
+        System.out.println("The Maximum volume is : " + area);
     }
 
-    public static long factorialCalculator(long n) {
-        long factorial=1;
-        for(int i=1;i<=n;i++){
-            factorial*=i;
+    public static int areaCalculator(List<Integer> arr) {
+        int area=0;
+        int len= arr.size();
+        int width=0;
+        int height=0;
+
+        for(int i=1;i<=len;i++){
+            for(int j=i+1;j<len;j++){
+                width=j-i;
+              height=Math.min(arr.get(i),arr.get(j));
+                if(width*height>area){
+                    area=width*height;
+                }
+            }
         }
-        return factorial;
+        return area;
 
     }
 //    public static List<List<Integer>> stringIntegerConverter(List<String> history){
