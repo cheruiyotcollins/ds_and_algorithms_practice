@@ -4,7 +4,6 @@ import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
-//        List<Integer> arr = new ArrayList<>();
         int[][] intervals = {
                 {1, 3},
                 {4, 5},
