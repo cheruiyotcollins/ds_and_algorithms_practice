@@ -5,10 +5,6 @@ import java.util.Collections;
 public class Main {
     public static void main(String[] args) {
 //        List<Integer> arr = new ArrayList<>();
-//        arr.add(1);
-//        arr.add(5);
-//        arr.add(4);
-//        arr.add(3);
         int[][] intervals = {
                 {1, 3},
                 {4, 5},
