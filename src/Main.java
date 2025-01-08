@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) {
@@ -7,41 +9,44 @@ public class Main {
 //        arr.add(5);
 //        arr.add(4);
 //        arr.add(3);
-        int[] arr = {7, 3, 2, 4, 9, 12, 56};
-        int m=5;
+        int[][] intervals = {
+                {1, 3},
+                {4, 5},
+                {6, 7},
+                {8, 10}
+        };
+        int[] newInterval={5,6};
 
-//        long n= 20;
-
-
-        int volume = areaCalculator(arr,m);
-        System.out.println("The Maximum volume is : " + volume);
+        ArrayList<int[]> intervalOutput = insertInterval(intervals,newInterval);
+        for (int[] interval : intervalOutput) {
+            System.out.println(Arrays.toString(interval));
+        }
     }
 
-    public static int areaCalculator(int[] arr, int m) {
-        int res = Integer.MAX_VALUE;
-         Arrays.sort(arr);
-        // For every element of the array
-        int n = arr.length;
+    public static ArrayList<int[]> insertInterval(int[][] arr, int[] newInterval) {
+        ArrayList<int[]> res = new ArrayList<>();
+        Collections.addAll(res, arr);
 
-        // Sort the given packets
-        Arrays.sort(arr);
+        int i = 0;
+        int len = res.size();
 
-        int minDiff = Integer.MAX_VALUE;
-
-        for (int i = 0; i + m - 1 < n; i++) {
-
-            // calculate difference of current window
-            int diff = arr[i + m - 1] - arr[i];
-
-            // if current difference is smaller
-            // then update the minimum difference
-            if (diff < minDiff)
-                minDiff = diff;
+        // Add intervals before newInterval
+        while (i < len && res.get(i)[1] < newInterval[0]) {
+            i++;
         }
-        return minDiff;
 
+        // Merge overlapping intervals
+        while (i < len && res.get(i)[0] <= newInterval[1]) {
+            newInterval[0] = Math.min(newInterval[0], res.get(i)[0]);
+            newInterval[1] = Math.max(newInterval[1], res.get(i)[1]);
+            res.remove(i);
+            len--;
+        }
 
+        // Insert the merged interval
+        res.add(i, newInterval);
 
+        return res;
     }
 //    public static List<List<Integer>> stringIntegerConverter(List<String> history){
 //        List<List<Integer>> integerList= new ArrayList<>();
