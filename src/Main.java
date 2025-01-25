@@ -2,38 +2,31 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        String str = "geeksforgeeks";
+        String str = "geeekk";
         System.out.println(longestSubstring(str));
     }
 
 
-    public static String longestSubstring(String str) {
-        int start = 0; // Start of the current window
-        int maxStart = 0; // Start index of the longest substring
-        int maxLength = 0; // Length of the longest substring
-        Set<Character> uniqueCharacters = new HashSet<>();
+    public static char longestSubstring(String str) {
+        char mostOccuring = 0;
+        int maxLength = 0;
+        int len= str.length();
+        for (int i= 0; i< str.length(); i++) {
+        char currentChar = str.charAt(i);
+        int current=i;
 
-        for (int end = 0; end < str.length(); end++) {
-            char currentChar = str.charAt(end);
-
-            // If the character is already in the set, shrink the window from the start
-            while (uniqueCharacters.contains(currentChar)) {
-                uniqueCharacters.remove(str.charAt(start));
-                start++;
+            while (current<len&&str.charAt(current)==currentChar) {
+                current++;
             }
 
-            // Add the current character to the set
-            uniqueCharacters.add(currentChar);
-
-            // Update maxLength and maxStart if the current window is the largest so far
-            if (end - start + 1 > maxLength) {
-                maxLength = end - start + 1;
-                maxStart = start;
+            if (current - i > maxLength) {
+                maxLength = current-i;
+                mostOccuring = currentChar;
             }
         }
 
-        // Return the longest substring
-        return str.substring(maxStart, maxStart + maxLength);
+        System.out.println(maxLength);
+        return mostOccuring;
     }
 
 //    public static List<List<Integer>> stringIntegerConverter(List<String> history){
