@@ -2,25 +2,22 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        String arr = "())((())";
-        System.out.println(isBalanced(arr));
+        String arr = "Too hot to hoot.";
+        System.out.println(isSentencePalindrome(arr));
     }
 
-    public static String isBalanced(String s1) {
-        int balance = 0;
-        for (int i = 0; i < s1.length(); i++) {
-            if (s1.charAt(i) == '(') {
-                balance++;
-            } else if (s1.charAt(i) == ')') {
-                balance--;
-            }
-            // If at any point, balance goes negative, it's not balanced
-            if (balance < 0) {
-                return "Not Balanced";
+    public static String isSentencePalindrome(String s1) {
+        boolean isPalindrome=true;
+        String s1Arr= s1.replaceAll("[^a-zA-Z0-9]","").toLowerCase(Locale.ROOT);
+
+        int len= s1Arr.length()-1;
+        for(int i=0;i<=len;i++){
+            if(s1Arr.charAt(i)!=s1Arr.charAt(len)){
+                isPalindrome=false;
+                break;
             }
         }
-        // If balance is zero, parentheses are balanced
-        return balance == 0 ? "Balanced" : "Not Balanced";
+        return isPalindrome? "Is Palindrome": "Not Palindrome";
     }
 }
 
