@@ -7,21 +7,20 @@ public class Main {
     }
 
     public static String isBalanced(String s1) {
-        int count1=0;
-        int count2=0;
-        int len= s1.length();
-        for(int i=0;i<len;i++){
-         if(s1.charAt(i)=='('){
-             count1++;
-         }else{
-             count2++;
-         }
+        int balance = 0;
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) == '(') {
+                balance++;
+            } else if (s1.charAt(i) == ')') {
+                balance--;
+            }
+            // If at any point, balance goes negative, it's not balanced
+            if (balance < 0) {
+                return "Not Balanced";
+            }
         }
-        if(count1==count2){
-            return "Balanced ";
-        }
-
-        return "Not Balanced ";
+        // If balance is zero, parentheses are balanced
+        return balance == 0 ? "Balanced" : "Not Balanced";
     }
 }
 
