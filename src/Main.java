@@ -1,42 +1,30 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 public class Main {
     public static void main(String[] args) {
         String[] arr = {"act", "god", "cat", "dog", "tac"};
         System.out.println(findAnagram(arr));
     }
 
-
     public static List<List<String>> findAnagram(String[] s1) {
+        // Map to group anagrams
+        Map<String, List<String>> map = new HashMap<>();
 
-        List<List<String>> anagrams= new ArrayList<>();
-        int len= s1.length;
-        for(int i = 0; i < len; i++) {
-            List<String> anagram= new ArrayList<>();
-            for(int j=i+1;j<len-1;j++) {
-                boolean isAnagram=true;
-                int strLen = s1[i].length();
-                int m = strLen - 1;
-                for (int k = 0; k < strLen; k++) {
-                    if (s1[i].charAt(k) != s1[j].charAt(m)) {
-                        isAnagram = false;
-                        break;
-                    }
-                    m--;
-                }
-                if(isAnagram){
-                    anagram.add(s1[i]);
-                    anagram.add(s1[j]);
-                }
-            }
-            anagrams.add(anagram);
+        for (String word : s1) {
+            // Sort the characters of the word to create a key
+            char[] chars = word.toCharArray();
+            Arrays.sort(chars);
+            String sortedWord = new String(chars);
+
+            // Group words with the same sorted characters
+            map.putIfAbsent(sortedWord, new ArrayList<>());
+            map.get(sortedWord).add(word);
         }
 
-
-        return  anagrams;
+        // Return the groups of anagrams as a list of lists
+        return new ArrayList<>(map.values());
     }
+}
 
 
 
@@ -53,7 +41,7 @@ public class Main {
 //        }
 //        return integerList;
 //    }
-}
+//}
 
 
 
