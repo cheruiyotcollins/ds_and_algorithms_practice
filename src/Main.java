@@ -2,27 +2,26 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        String[] arr = {"act", "god", "cat", "dog", "tac"};
-        System.out.println(findAnagram(arr));
+        String arr = "())((())";
+        System.out.println(isBalanced(arr));
     }
 
-    public static List<List<String>> findAnagram(String[] s1) {
-        // Map to group anagrams
-        Map<String, List<String>> map = new HashMap<>();
-
-        for (String word : s1) {
-            // Sort the characters of the word to create a key
-            char[] chars = word.toCharArray();
-            Arrays.sort(chars);
-            String sortedWord = new String(chars);
-
-            // Group words with the same sorted characters
-            map.putIfAbsent(sortedWord, new ArrayList<>());
-            map.get(sortedWord).add(word);
+    public static String isBalanced(String s1) {
+        int count1=0;
+        int count2=0;
+        int len= s1.length();
+        for(int i=0;i<len;i++){
+         if(s1.charAt(i)=='('){
+             count1++;
+         }else{
+             count2++;
+         }
+        }
+        if(count1==count2){
+            return "Balanced ";
         }
 
-        // Return the groups of anagrams as a list of lists
-        return new ArrayList<>(map.values());
+        return "Not Balanced ";
     }
 }
 
