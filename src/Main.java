@@ -1,29 +1,41 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 public class Main {
     public static void main(String[] args) {
-        String s1 = "geeks";
-        String s2="skeeg";
-        System.out.println(findAnagram(s1,s2));
+        String[] arr = {"act", "god", "cat", "dog", "tac"};
+        System.out.println(findAnagram(arr));
     }
 
 
-    public static boolean findAnagram(String s1, String s2) {
-        boolean isAnagram=true;
-        int len= s1.length();
-        int j=len-1;
-       for(int i=0;i<len;i++){
-           if(s1.charAt(i)!=s2.charAt(j)){
-               System.out.println(s1.charAt(i));
-               System.out.println(s1.charAt(j));
-               isAnagram=false;
-               break;
-           }
-           j--;
-       }
+    public static List<List<String>> findAnagram(String[] s1) {
+
+        List<List<String>> anagrams= new ArrayList<>();
+        int len= s1.length;
+        for(int i = 0; i < len; i++) {
+            List<String> anagram= new ArrayList<>();
+            for(int j=i+1;j<len-1;j++) {
+                boolean isAnagram=true;
+                int strLen = s1[i].length();
+                int m = strLen - 1;
+                for (int k = 0; k < strLen; k++) {
+                    if (s1[i].charAt(k) != s1[j].charAt(m)) {
+                        isAnagram = false;
+                        break;
+                    }
+                    m--;
+                }
+                if(isAnagram){
+                    anagram.add(s1[i]);
+                    anagram.add(s1[j]);
+                }
+            }
+            anagrams.add(anagram);
+        }
 
 
-        return  isAnagram;
+        return  anagrams;
     }
 
 
