@@ -16,6 +16,7 @@ public class Main {
                 isPalindrome=false;
                 break;
             }
+            len--;
         }
         return isPalindrome? "Is Palindrome": "Not Palindrome";
     }
