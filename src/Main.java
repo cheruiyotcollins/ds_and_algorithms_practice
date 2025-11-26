@@ -1,56 +1,63 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 public class Main {
-    public static void main(String[] args) {
-        String arr = "forgeeksskeegfor";
-        System.out.println(isSentencePalindrome(arr));
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int meetingsRows = Integer.parseInt(bufferedReader.readLine().trim());
+        int meetingsColumns = Integer.parseInt(bufferedReader.readLine().trim());
+
+        List<List<Integer>> meetings = new ArrayList<>();
+
+        IntStream.range(0, meetingsRows).forEach(i -> {
+            try {
+                meetings.add(
+                        Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+                                .map(Integer::parseInt)
+                                .collect(toList())
+                );
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        int result = maximizeNonOverlappingMeetings(meetings);
+
+        System.out.println(result);
+
+        bufferedReader.close();
     }
-
-    public static String isSentencePalindrome(String s1) {
-        boolean isPalindrome=true;
-        int largest=0;
-        int start=0;
-        int end =0;
-
-        int len= s1.length()-1;
-        for(int i=0;i<=len;i++){
-            if(s1.charAt(i)!=s1.charAt(len)){
-                len--;
-                continue;
-            }
-            int k=i;
-            int m=len;
-            while(s1.charAt(i)==s1.charAt(len)){
-                i++;
-                len--;
-            }
-            if(m-k>largest){
-                largest=m-k;
-               start=k;
-               end=m;
-            }
-
+    public static int maximizeNonOverlappingMeetings(List<List<Integer>> meetings) {
+        if (meetings == null || meetings.isEmpty()) {
+            return 0;
         }
-        return s1.substring(start,end+1);
+        meetings.sort(new Comparator<>() {
+            @Override
+            public int compare(List<Integer> o1, List<Integer> o2) {
+                return o1.getLast().compareTo(o2.getLast());
+            }
+        });
+        int count=1;
+        int lastEndTime= meetings.getFirst().getLast();
+        for(int i=1;i<meetings.size();i++){
+            int currentStartTime =  meetings.get(i).getFirst();
+            if(currentStartTime>=lastEndTime){
+                count++;
+                lastEndTime=meetings.get(i).getLast();
+
+            }
+        }
+        return count;
     }
 }
-
-
-
-//    public static List<List<Integer>> stringIntegerConverter(List<String> history){
-//        List<List<Integer>> integerList= new ArrayList<>();
-//        for(String s: history){
-//            String[] parts =s.split(",");
-//            List<Integer> integers = new ArrayList<>();
-//            for(String part:parts){
-//                integers.add(Integer.parseInt(part));
-//
-//            }
-//            integerList.add(integers);
-//        }
-//        return integerList;
-//    }
-//}
-
-
-
