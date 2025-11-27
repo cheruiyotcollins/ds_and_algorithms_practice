@@ -10,58 +10,41 @@ import static java.util.stream.Collectors.toList;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        int pricesCount = Integer.parseInt(bufferedReader.readLine().trim());
 
-        String code_snippet = bufferedReader.readLine();
+        List<Integer> prices = IntStream.range(0, pricesCount).mapToObj(i -> {
+                    try {
+                        return bufferedReader.readLine().replaceAll("\\s+$", "");
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                })
+                .map(String::trim)
+                .map(Integer::parseInt)
+                .collect(toList());
 
-        boolean result = areBracketsProperlyMatched(code_snippet);
+        int budget = Integer.parseInt(bufferedReader.readLine().trim());
 
-        System.out.println(result ? 1 : 0);
+        int result = countAffordablePairs(prices, budget);
+
+        System.out.println(result);
 
         bufferedReader.close();
     }
-    public static boolean areBracketsProperlyMatched(String code_snippet) {
-        // Handle the empty string case (valid)
-        if (code_snippet == null || code_snippet.length() == 0) {
-            return true;
-        }
 
-        // Deque is the preferred interface for stack in modern Java,
-        // implementing the Last-In, First-Out (LIFO) principle.
-        Deque<Character> stack = new LinkedList<>();
+    public static int countAffordablePairs(List<Integer> prices, int budget) {
+        int count=0;
+        int len =prices.size();
 
-        for (char c : code_snippet.toCharArray()) {
-
-            // 1. Handle Opening Brackets: Push onto the stack
-            if (c == '(' || c == '{' || c == '[') {
-                stack.push(c);
-            }
-
-            // 2. Handle Closing Brackets: Pop and check for match
-            else if (c == ')' || c == '}' || c == ']') {
-
-                // Case 1: Stack is empty (Closing bracket without a preceding opener)
-                if (stack.isEmpty()) {
-                    return false; // Invalid
-                }
-
-                char lastOpen = stack.pop(); // Get the most recently opened bracket
-
-                // Case 2: Mismatched brackets (e.g., popping '{' for a ')' )
-                if (c == ')' && lastOpen != '(') {
-                    return false; // Invalid
-                }
-                if (c == '}' && lastOpen != '{') {
-                    return false; // Invalid
-                }
-                if (c == ']' && lastOpen != '[') {
-                    return false; // Invalid
+        for(int i=0;i<len;i++){
+            for(int j=i+1;j<len;j++){
+                if(prices.get(i)+prices.get(j)<=budget){
+                    count++;
                 }
             }
-            // Non-bracket characters are ignored.
         }
 
-        // 3. Final Check: If the stack is empty, all opening brackets were paired
-        // with their correct closing bracket.
-        return stack.isEmpty() ? true : false;
+        return count;
+
     }
 }
