@@ -12,63 +12,41 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        String digits = bufferedReader.readLine();
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
 
-        List<String> result = minTasksToCancelForNoConflict(digits);
+        long result = getAutoSaveInterval(n);
 
-        System.out.println(
-                result.stream()
-                        .collect(joining("\n"))
-        );
+        System.out.println(result);
 
         bufferedReader.close();
     }
+    public static long getAutoSaveInterval(int n) {
 
-    private static final Map<Character, String> MAPPING = new HashMap<>() {{
-        put('2', "abc");
-        put('3', "def");
-        put('4', "ghi");
-        put('5', "jkl");
-        put('6', "mno");
-        put('7', "pqrs");
-        put('8', "tuv");
-        put('9', "wxyz");
-        put('0', "0");
-        put('1', "1");
-    }};
+        List<Long> fibonacci = new ArrayList<>();
 
-    public static List<String> minTasksToCancelForNoConflict(String digits) {
-        List<String> combinations= new ArrayList<>();
-        if(digits.isEmpty()||digits.length()==0){
-            return combinations;
+        // Handle base cases F(0) and F(1) explicitly
+        if (n == 0) {
+            return 1L; // F(0) = 1
+        }
+        if (n == 1) {
+            return 2L; // F(1) = 2
         }
 
+        // Initialize the first two terms in the list
+        fibonacci.add(1L); // F(0)
+        fibonacci.add(2L); // F(1)
 
-        backtrack(digits,0, new StringBuilder(),combinations);
-
-        return combinations;
-
-    }
-    private static void backtrack(String digits,int index,StringBuilder currentCombination,List<String> combinations){
-        if(index==digits.length()){
-            combinations.add(currentCombination.toString());
+        // Start the loop from the calculation of F(2) up to F(n)
+        // The list size will be (i+1). If we want F(i), we check the last two elements.
+        for (int i = 2; i <= n; i++) {
+            // F(i) = F(i-1) + F(i-2)
+            // F(i-1) is the element at index (i-1) in the list.
+            // F(i-2) is the element at index (i-2) in the list.
+            long nextTerm = fibonacci.get(i - 1) + fibonacci.get(i - 2);
+            fibonacci.add(nextTerm);
         }
 
-        ;
-        if (index >= digits.length()) {
-            return;
-        }
-        char digit= digits.charAt(index);
-        String letters= MAPPING.get(digit);
-        if(letters==null){
-            return;
-
-        }
-        for(char letter: letters.toCharArray()){
-            currentCombination.append(letter);
-            backtrack(digits,index+1,currentCombination,combinations);
-            currentCombination.deleteCharAt(currentCombination.length()-1);
-
-        }
+        // The n-th term is stored at index n
+        return fibonacci.get(n);
     }
 }
