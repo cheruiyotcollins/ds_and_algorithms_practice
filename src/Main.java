@@ -5,46 +5,70 @@ import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        int pricesCount = Integer.parseInt(bufferedReader.readLine().trim());
 
-        List<Integer> prices = IntStream.range(0, pricesCount).mapToObj(i -> {
-                    try {
-                        return bufferedReader.readLine().replaceAll("\\s+$", "");
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                })
-                .map(String::trim)
-                .map(Integer::parseInt)
-                .collect(toList());
+        String digits = bufferedReader.readLine();
 
-        int budget = Integer.parseInt(bufferedReader.readLine().trim());
+        List<String> result = minTasksToCancelForNoConflict(digits);
 
-        int result = countAffordablePairs(prices, budget);
-
-        System.out.println(result);
+        System.out.println(
+                result.stream()
+                        .collect(joining("\n"))
+        );
 
         bufferedReader.close();
     }
 
-    public static int countAffordablePairs(List<Integer> prices, int budget) {
-        int count=0;
-        int len =prices.size();
+    private static final Map<Character, String> MAPPING = new HashMap<>() {{
+        put('2', "abc");
+        put('3', "def");
+        put('4', "ghi");
+        put('5', "jkl");
+        put('6', "mno");
+        put('7', "pqrs");
+        put('8', "tuv");
+        put('9', "wxyz");
+        put('0', "0");
+        put('1', "1");
+    }};
 
-        for(int i=0;i<len;i++){
-            for(int j=i+1;j<len;j++){
-                if(prices.get(i)+prices.get(j)<=budget){
-                    count++;
-                }
-            }
+    public static List<String> minTasksToCancelForNoConflict(String digits) {
+        List<String> combinations= new ArrayList<>();
+        if(digits.isEmpty()||digits.length()==0){
+            return combinations;
         }
 
-        return count;
 
+        backtrack(digits,0, new StringBuilder(),combinations);
+
+        return combinations;
+
+    }
+    private static void backtrack(String digits,int index,StringBuilder currentCombination,List<String> combinations){
+        if(index==digits.length()){
+            combinations.add(currentCombination.toString());
+        }
+
+        ;
+        if (index >= digits.length()) {
+            return;
+        }
+        char digit= digits.charAt(index);
+        String letters= MAPPING.get(digit);
+        if(letters==null){
+            return;
+
+        }
+        for(char letter: letters.toCharArray()){
+            currentCombination.append(letter);
+            backtrack(digits,index+1,currentCombination,combinations);
+            currentCombination.deleteCharAt(currentCombination.length()-1);
+
+        }
     }
 }
