@@ -10,22 +10,28 @@ import static java.util.stream.Collectors.toList;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        int[] n ={7, 10, 1, 3, 6, 9, 2};
-        System.out.println(maxPrice(n));
+        int[] n ={10, 3, 5, 6, 2};
+        for (int element :  maxPrice(n)) {
+            System.out.print(element + " "); // Print element followed by a space
+        }
+
     }
-    public static long maxPrice(int[] n) {
+    public static int[] maxPrice(int[] n) {
    int len= n.length;
+   int[] product=new int[len];
    int max=0;
 
      for(int i=0;i<len;i++){
-         int k=i+1;
-        while(k<len&&n[k]>n[i]){
-            if(n[k]-n[i]>max){
-               max= n[k]-n[i];
-            }
+         int k=0;
+         int currentProduct=1;
+        while(k<len){
+           if(k!=i){
+               currentProduct*= n[k];
+           }
             k++;
         }
+        product[i]=currentProduct;
      }
-     return  max;
+     return  product;
     }
 }
