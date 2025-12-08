@@ -1,43 +1,36 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
+import java.util.HashSet;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        int[] n ={2, 3, -8, 7, -1, 2, 3};
-        int[] res= maxPrice(n);
-        for (int i=res[0];i<= res[1];i++) {
-            System.out.print(n[i] + " "); // Print element followed by a space
-        }
+        String req = "geeksforgeeks";
+        System.out.println(getMaxSub(req));
 
     }
-    public static int[] maxPrice(int[] n) {
-   int len= n.length;
-   int[] startStop=new int[2];
-   int max=0;
 
-     for(int i=0;i<len;i++){
-         int k=i;
-         int currentMax=0;
+    public static int getMaxSub(String s) {
+        int len = s.length();
+        int max = 0;
+        HashSet<Character> unique= new HashSet<>();
+        for (int i = 0; i < len; i++) {
+            unique.clear();
+             int k=i+1;
 
-        while(k<len){
-            currentMax+=n[k];
-           if(currentMax>max){
-               max=currentMax;
-               startStop[0]=i;
-               startStop[1]=k;
+             unique.add(s.charAt(i));
+            int count =1;
+             while(k<len){
+                 if(unique.contains(s.charAt(k))){
+                     break;
+                 }
+                    count++;
+                    unique.add(s.charAt(k));
 
-           }
-            k++;
+                 k++;
+             }
+             if(count>max){
+                 max=count;
+             }
         }
-     }
-     System.out.println(max);
-     return  startStop;
+        return max;
     }
 }
