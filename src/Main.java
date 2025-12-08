@@ -1,36 +1,33 @@
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        String req = "geeksforgeeks";
+        String req = "geeekk";
         System.out.println(getMaxSub(req));
 
     }
 
-    public static int getMaxSub(String s) {
+    public static HashMap<Character, Integer> getMaxSub(String s) {
         int len = s.length();
-        int max = 0;
-        HashSet<Character> unique= new HashSet<>();
+        HashMap<Character,Integer> maxMap= new HashMap<>();
+        int max=0;
         for (int i = 0; i < len; i++) {
-            unique.clear();
-             int k=i+1;
+            char current= s.charAt(i);
+            int currentMax=1;
+            int k=i+1;
+            while(k<len && current==s.charAt(k)){
+                currentMax++;
+                k++;
+            }
+            if(currentMax>max){
+                max=currentMax;
+                maxMap.clear();
+                maxMap.put(current,max);
+            }
 
-             unique.add(s.charAt(i));
-            int count =1;
-             while(k<len){
-                 if(unique.contains(s.charAt(k))){
-                     break;
-                 }
-                    count++;
-                    unique.add(s.charAt(k));
-
-                 k++;
-             }
-             if(count>max){
-                 max=count;
-             }
         }
-        return max;
+        return maxMap;
     }
 }
